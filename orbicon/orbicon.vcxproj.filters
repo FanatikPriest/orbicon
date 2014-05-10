@@ -18,10 +18,10 @@
     <ClCompile Include="src\introduction_windows_vs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\image_utilities.cpp">
+    <ClCompile Include="src\image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\image.cpp">
+    <ClCompile Include="src\image_utilities.h">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
