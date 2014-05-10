@@ -1,30 +1,41 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <iostream>
+#include <opencv2/features2d/features2d.hpp>
+#include <opencv2/gpu/gpu.hpp>
+#include "image_utilities.cpp"
 
 using namespace cv;
+using namespace gpu;
 using namespace std;
 
-int main( int argc, char** argv )
+int main(int argc, char** argv)
 {
-    if( argc != 2)
-    {
-     cout <<" Usage: display_image ImageToLoadAndDisplay" << endl;
-     return -1;
-    }
+	string image_path         = "..\\orbicon\\resource\\opencv-logo.png";
+	string rotated_image_path = "..\\orbicon\\resource\\opencv-logo-rotated.png";
 
-    Mat image;
-    image = imread(argv[1], IMREAD_COLOR); // Read the file
+	Mat image		  = read_grayscale_image(image_path);
+	Mat rotated_image = read_grayscale_image(rotated_image_path);
+	Mat image_desc, rotated_image_desc;
 
-    if(! image.data ) // Check for invalid input
-    {
-        cout << "Could not open or find the image" << std::endl ;
-        return -1;
-    }
+	ORB orb;
+	vector <KeyPoint> image_keypoints, rotated_image_keypoints;
 
-    namedWindow( "Display window", WINDOW_AUTOSIZE ); // Create a window for display.
-    imshow( "Display window", image ); // Show our image inside it.
+	orb(image, cv::Mat(), image_keypoints, image_desc);
+	orb(rotated_image, cv::Mat(), rotated_image_keypoints, rotated_image_desc);
 
-    waitKey(0); // Wait for a keystroke in the window
-    return 0;
+	Mat with_keypoints;
+	drawKeypoints(image, image_keypoints, with_keypoints, Scalar::all(-1), DrawMatchesFlags::DEFAULT);
+
+	BFMatcher matcher = BFMatcher(NORM_HAMMING);
+	vector<DMatch, allocator<DMatch>> matches;
+	matcher.match(image_desc, rotated_image_desc, matches);
+
+	Mat img_matches;
+	drawMatches(image, image_keypoints, rotated_image, rotated_image_keypoints, matches, img_matches);
+
+	namedWindow("Display window", WINDOW_AUTOSIZE);
+	imshow("Display window", img_matches);
+
+	waitKey(0); // Wait for a keystroke in the window
+	return 0;
 }
