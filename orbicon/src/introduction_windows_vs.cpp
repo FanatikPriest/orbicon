@@ -1,7 +1,13 @@
+#include <windows.h>
+#include <stdlib.h>
+#include <string.h>
+#include <tchar.h>
+
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/gpu/gpu.hpp>
+
 #include "image.h"
 
 using namespace cv;
@@ -9,7 +15,7 @@ using namespace gpu;
 using namespace orbicon;
 using namespace std;
 
-int main(int argc, char** argv)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	string image_path         = "..\\orbicon\\resource\\opencv-logo.png";
 	string rotated_image_path = "..\\orbicon\\resource\\opencv-logo-rotated.png";
