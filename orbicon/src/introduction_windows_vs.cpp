@@ -9,6 +9,7 @@
 #include <opencv2/gpu/gpu.hpp>
 
 #include "image.h"
+#include "image_matcher.h"
 
 using namespace cv;
 using namespace gpu;
@@ -22,18 +23,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Image image(image_path), rotated_image(rotated_image_path);
 
-	BFMatcher matcher = BFMatcher(NORM_HAMMING);
-	vector<DMatch, allocator<DMatch>> matches;
-
-	matcher.match(image.get_descriptors(),rotated_image.get_descriptors(), matches);
-
-	Mat img_matches;
-	drawMatches(image.get_grayscale_image(), image.get_keypoints(), 
-				rotated_image.get_grayscale_image(), rotated_image.get_keypoints(),
-				matches, img_matches);
+	ImageMatcher matcher(image, rotated_image);
 
 	namedWindow("Display window", WINDOW_AUTOSIZE);
-	imshow("Display window", img_matches);
+	imshow("Display window", matcher.get_matches_drawing());
 
 	waitKey(0); // Wait for a keystroke in the window
 	return 0;

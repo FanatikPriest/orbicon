@@ -82,6 +82,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\image.cpp" />
+    <ClCompile Include="src\image_matcher.cpp" />
     <ClCompile Include="src\image_utilities.h" />
     <ClCompile Include="src\introduction_windows_vs.cpp" />
   </ItemGroup>
@@ -90,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\image.h" />
+    <ClInclude Include="src\image_matcher.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
