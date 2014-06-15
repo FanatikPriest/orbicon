@@ -84,13 +84,13 @@ WNDCLASSEX create_win_class()
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	string subject_file_name = open_file();
-	string scene_file_name   = open_file();
+	string scene_file_name = open_file();
 
 	if (subject_file_name.empty() || scene_file_name.empty())
 	{
 		MessageBox(NULL,
 			_T("You must select scene and subject images!"),
-			_T("Orbicon"),
+			_T(szWindowClass),
 			NULL);
 
 		return 0;
@@ -108,7 +108,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// TODO review message strings
 		MessageBox(NULL,
 			_T("Call to RegisterClassEx failed!"),
-			_T("Win32 Guided Tour"),
+			_T(szWindowClass),
 			NULL);
 
 		return 1;
@@ -146,8 +146,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return 1;
 	}
 
-	return 0;
-
 	// The parameters to ShowWindow explained:
 	// hWnd: the value returned from CreateWindow
 	// nCmdShow: the fourth parameter from WinMain
@@ -167,7 +165,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 }
 
 /*
-	Using Window Procedures: http://msdn.microsoft.com/en-us/library/ms633570.aspx
+Using Window Procedures: http://msdn.microsoft.com/en-us/library/ms633570.aspx
 */
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
