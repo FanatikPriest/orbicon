@@ -27,14 +27,11 @@ HINSTANCE hInst;
 // Forward declarations of functions included in this code module:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-void logic()
+void logic(string subject_path, string scene_path)
 {
-	string image_path = "..\\orbicon\\resource\\opencv-logo.png";
-	string rotated_image_path = "..\\orbicon\\resource\\opencv-logo-rotated.png";
+	Image subject(subject_path), scene(scene_path);
 
-	Image image(image_path), rotated_image(rotated_image_path);
-
-	ImageMatcher matcher(image, rotated_image);
+	ImageMatcher matcher(subject, scene);
 
 	namedWindow("Display window", WINDOW_AUTOSIZE);
 	imshow("Display window", matcher.get_matches_drawing());
@@ -42,7 +39,29 @@ void logic()
 	waitKey(0); // Wait for a keystroke in the window
 }
 
-WNDCLASSEX createWinClass()
+string open_file()
+{
+	OPENFILENAME ofn;
+	char szFileName[MAX_PATH] = "";
+
+	ZeroMemory(&ofn, sizeof(ofn));
+
+	ofn.lStructSize = sizeof (ofn);
+	ofn.hwndOwner = NULL;
+	ofn.lpstrFile = szFileName;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrFilter = "Image (*.bmp, *.jpg, *.jpeg, *.png)\0*.BMP;*.JPG;*.JPEG;*.PNG\0";
+	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+
+	if (!GetOpenFileName(&ofn))
+	{
+		return "";
+	}
+
+	return szFileName;
+}
+
+WNDCLASSEX create_win_class()
 {
 	WNDCLASSEX wcex;
 
@@ -64,9 +83,25 @@ WNDCLASSEX createWinClass()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	string subject_file_name = open_file();
+	string scene_file_name   = open_file();
+
+	if (subject_file_name.empty() || scene_file_name.empty())
+	{
+		MessageBox(NULL,
+			_T("You must select scene and subject images!"),
+			_T("Orbicon"),
+			NULL);
+
+		return 0;
+	}
+
+	logic(subject_file_name, scene_file_name);
+
+
 	hInst = hInstance; // Store instance handle in our global variable
 
-	WNDCLASSEX wcex = createWinClass();
+	WNDCLASSEX wcex = create_win_class();
 
 	if (!RegisterClassEx(&wcex))
 	{
@@ -111,11 +146,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return 1;
 	}
 
+	return 0;
+
 	// The parameters to ShowWindow explained:
 	// hWnd: the value returned from CreateWindow
 	// nCmdShow: the fourth parameter from WinMain
-	ShowWindow(hWnd,
-		nCmdShow);
+	ShowWindow(hWnd, nCmdShow);
+
 	UpdateWindow(hWnd);
 
 	// Main message loop:
@@ -127,12 +164,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	return (int)msg.wParam;
-
-	// actual logic
-
-
-
-	return 0;
 }
 
 /*
@@ -159,7 +190,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		EndPaint(hWnd, &ps);
 
-		logic();
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
