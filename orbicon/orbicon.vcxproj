@@ -81,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\global_settings.cpp" />
     <ClCompile Include="src\image.cpp" />
     <ClCompile Include="src\image_matcher.cpp" />
     <ClCompile Include="src\image_utilities.h" />
@@ -90,6 +91,7 @@
     <Image Include="resource\opencv-logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\global_settings.h" />
     <ClInclude Include="src\image.h" />
     <ClInclude Include="src\image_matcher.h" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 #include "image.h"
 #include "image_utilities.h"
+#include "global_settings.h"
 
 using namespace orbicon;
 
@@ -96,7 +97,7 @@ void Image::generate_grayscale_image()
 
 void Image::generate_descriptors_and_keypoints()
 {
-	ORB orb;
+	ORB orb(GlobalSettings::features_number);
 
 	vector<KeyPoint> keypoints;
 	Mat descriptors;

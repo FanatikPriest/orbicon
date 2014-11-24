@@ -27,6 +27,9 @@
     <ClCompile Include="src\image_matcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\global_settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\opencv-logo.png">
@@ -38,6 +41,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\image_matcher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\global_settings.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
