@@ -47,7 +47,7 @@ vector<DMatch, allocator<DMatch>> ImageMatcher::get_good_matches()
 
 	for (auto & m : matches)
 	{
-		if (m.distance <= GlobalSettings::match_distance * min_dist)
+		if (m.distance <= GlobalSettings::match_distance_coef * min_dist)
 		{
 			good_matches.push_back(m);
 		}
@@ -63,7 +63,7 @@ vector<DMatch, allocator<DMatch>> ImageMatcher::get_good_knn_matches()
 
 	for (auto & m : matches)
 	{
-		if (m[0].distance <= GlobalSettings::knn_match_distance * m[1].distance)
+		if (m[0].distance <= GlobalSettings::knn_match_distance_ratio * m[1].distance)
 		{
 			good_matches.push_back(m[0]);
 		}
