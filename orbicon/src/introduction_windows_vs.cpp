@@ -10,6 +10,7 @@
 
 #include "image.h"
 #include "image_matcher.h"
+#include "global_settings.h"
 
 using namespace cv;
 using namespace gpu;
@@ -31,10 +32,19 @@ void logic(string subject_path, string scene_path)
 {
 	Image subject(subject_path), scene(scene_path);
 
+	GlobalSettings::use_knn_match = true;
+
 	ImageMatcher matcher(subject, scene);
 
-	namedWindow("Display window", WINDOW_AUTOSIZE);
-	imshow("Display window", matcher.get_matches_drawing());
+	namedWindow("KNN matching", WINDOW_AUTOSIZE);
+	imshow("KNN matching", matcher.get_matches_drawing());
+
+	GlobalSettings::use_knn_match = false;
+
+	matcher.match();
+
+	namedWindow("Simple matching", WINDOW_AUTOSIZE);
+	imshow("Simple matching", matcher.get_matches_drawing());
 
 	waitKey(0); // Wait for a keystroke in the window
 }

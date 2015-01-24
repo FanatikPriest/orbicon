@@ -17,27 +17,35 @@ using namespace std;
 */
 class orbicon::ImageMatcher {
 public:
-	ImageMatcher(Image& left, Image& right, bool use_good_matches = true);
+	ImageMatcher(Image& left, Image& right);
 
 	vector<DMatch, allocator<DMatch>> get_matches();
-	vector<vector<DMatch>> get_knn_matches();
-	vector<DMatch, allocator<DMatch>> get_good_matches();
-	vector<DMatch, allocator<DMatch>> get_good_knn_matches();
 	Mat& get_matches_drawing();
+
+	void match();
+	void clear();
 
 private:
 	Image* left;
 	Image* right;
-
-	bool use_good_matches;
 		
 	BFMatcher matcher;
 	vector<DMatch, allocator<DMatch>> matches;
-	vector<vector<DMatch>> knn_matches;
 	Mat matches_drawing;
 		
 	ImageMatcher();
 
-	void match();
+	void clear_matches();
+	void clear_matches_drawing();
+
+	void simple_match();
 	void knn_match();
+
+	int ratio_filter(vector<vector<DMatch>>& matches);
+	void symmetry_filter(const vector<vector<DMatch>>& matches1,
+						 const vector<vector<DMatch>>& matches2,
+						 vector<DMatch>& symmetrical_matches);
+	Mat ransac_filter(const vector<DMatch>& all_matches,
+					  const vector<KeyPoint>& keypoints1,
+					  const vector<KeyPoint>& keypoints2);
 };
