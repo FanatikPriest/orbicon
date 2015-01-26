@@ -275,9 +275,12 @@ Mat ImageMatcher::ransac_filter(const vector<DMatch>&   all_matches,
 	return fundemental;
 }
 
+/*
+	Requires at least 4 matching points.
+*/
 void ImageMatcher::display_homography()
 {
-	if (!GlobalSettings::display_homography || matches_drawing.empty() || matches.size() < 3)
+	if (!GlobalSettings::display_homography || matches_drawing.empty() || matches.size() < 4)
 	{
 		return;
 	}
