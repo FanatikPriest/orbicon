@@ -31,6 +31,12 @@ public:
 	static double simple_match_distance_coef;
 
 	/*
+		A flag whether or not to use RANSAC filterring in KNN.
+		Default: true
+	*/
+	static bool use_ransac_filterring;
+
+	/*
 		The minimal distance to epipolar line in RANSAC.
 		Default: 1.0
 	*/
@@ -47,4 +53,10 @@ public:
 		Default: true
 	*/
 	static bool ransac_refine_fundamental_matrix;
+
+	/*
+		A flag whether or not to to display the homography of the left image on the right image.
+		Default: true
+	*/
+	static bool display_homography;
 };

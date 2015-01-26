@@ -48,4 +48,6 @@ private:
 	Mat ransac_filter(const vector<DMatch>& all_matches,
 					  const vector<KeyPoint>& keypoints1,
 					  const vector<KeyPoint>& keypoints2);
+
+	void display_homography();
 };

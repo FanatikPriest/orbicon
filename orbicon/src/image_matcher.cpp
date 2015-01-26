@@ -31,6 +31,8 @@ Mat& ImageMatcher::get_matches_drawing()
 					get_matches(), matches_drawing,
 					Scalar::all(-1), Scalar::all(1),
 					vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+
+		display_homography();
 	}
 
 	return matches_drawing;
@@ -77,7 +79,7 @@ void ImageMatcher::simple_match()
 
 	vector<DMatch, allocator<DMatch>> good_matches;
 
-	for (auto & m : all_matches)
+	for (auto& m : all_matches)
 	{
 		double dist = m.distance;
 
@@ -89,7 +91,7 @@ void ImageMatcher::simple_match()
 
 	const double allowed_distance = GlobalSettings::simple_match_distance_coef * min_dist;
 
-	for (auto & m : all_matches)
+	for (auto& m : all_matches)
 	{
 		if (m.distance <= allowed_distance)
 		{
@@ -114,7 +116,14 @@ void ImageMatcher::knn_match()
 	vector<DMatch> symmetrical_matches;
 	symmetry_filter(left_to_right_matches, right_to_left_matches, symmetrical_matches);
 
-	Mat fundamental = ransac_filter(symmetrical_matches, left->get_keypoints(), right->get_keypoints());
+	if (GlobalSettings::use_ransac_filterring)
+	{
+		Mat fundamental = ransac_filter(symmetrical_matches, left->get_keypoints(), right->get_keypoints());
+	}
+	else
+	{
+		matches = symmetrical_matches;
+	}
 }
 
 int ImageMatcher::ratio_filter(vector<vector<DMatch>>& matches)
@@ -185,6 +194,9 @@ void ImageMatcher::symmetry_filter(const vector<vector<DMatch>>& matches1,
 	}
 }
 
+/*
+	It cannot deal with rotation.
+*/
 Mat ImageMatcher::ransac_filter(const vector<DMatch>&   all_matches,
 								const vector<KeyPoint>& keypoints1,
 								const vector<KeyPoint>& keypoints2)
@@ -261,4 +273,50 @@ Mat ImageMatcher::ransac_filter(const vector<DMatch>&   all_matches,
 		}
 	}
 	return fundemental;
+}
+
+void ImageMatcher::display_homography()
+{
+	if (!GlobalSettings::display_homography || matches_drawing.empty() || matches.size() < 3)
+	{
+		return;
+	}
+
+	vector<KeyPoint> object_keypoints = left->get_keypoints();
+	vector<KeyPoint> scene_keypoints  = right->get_keypoints();
+
+	vector<Point2f> object_points;
+	vector<Point2f> scene_points;
+
+	for (auto& m : matches)
+	{
+		object_points.push_back(object_keypoints[m.queryIdx].pt);
+		scene_points.push_back(scene_keypoints[m.trainIdx].pt);
+	}
+
+	Mat homography = findHomography(object_points, scene_points, CV_RANSAC);
+
+	Mat left_image = left->get_image();
+
+	// Get the corners from the left image (the object to be "detected")
+	vector<Point2f> object_corners(4);
+
+	object_corners[0] = cvPoint(0, 0);
+	object_corners[1] = cvPoint(left_image.cols, 0);
+	object_corners[2] = cvPoint(left_image.cols, left_image.rows);
+	object_corners[3] = cvPoint(0, left_image.rows);
+
+	vector<Point2f> scene_corners(4);
+
+	perspectiveTransform(object_corners, scene_corners, homography);
+
+	Point2f x_offset = Point2f(left_image.cols, 0);
+	Scalar scalar = Scalar(0, 255, 0);
+	int thickness = 2;
+
+	// Draw lines between the corners (the mapped object in the scene - right image)
+	line(matches_drawing, scene_corners[0] + x_offset, scene_corners[1] + x_offset, scalar, thickness);
+	line(matches_drawing, scene_corners[1] + x_offset, scene_corners[2] + x_offset, scalar, thickness);
+	line(matches_drawing, scene_corners[2] + x_offset, scene_corners[3] + x_offset, scalar, thickness);
+	line(matches_drawing, scene_corners[3] + x_offset, scene_corners[0] + x_offset, scalar, thickness);
 }
