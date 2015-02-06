@@ -306,7 +306,7 @@ void ImageMatcher::display_homography()
 
 	Mat homography = findHomography(object_points, scene_points, CV_RANSAC);
 
-	Mat left_image = left->get_image();
+	Mat left_image = left->get_grayscale_image();
 
 	// Get the corners from the left image (the object to be "detected")
 	vector<Point2f> object_corners(4);

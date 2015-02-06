@@ -59,4 +59,19 @@ public:
 		Default: true
 	*/
 	static bool display_homography;
+
+	/*
+		The mode of grayscale image size manipulation before running the descriptor.
+
+		Original       - Does not resize the image.
+		Shrink         - Resizes the image to half its size.
+		BlurByResizing - This will shrink the image to half its size and then will expand it back to full size.
+	*/
+	enum GrayscaleResize { Original, Shrink, BlurByResizing };
+
+	/*
+		The chosen grayscale image resize mode
+		Default: Original
+	*/
+	static GrayscaleResize grayscale_resize_mode;
 };
