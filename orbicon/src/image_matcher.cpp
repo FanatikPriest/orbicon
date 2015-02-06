@@ -99,7 +99,14 @@ void ImageMatcher::simple_match()
 		}
 	}
 
-	matches = good_matches;
+	if (GlobalSettings::use_ransac_filterring)
+	{
+		Mat fundamental = ransac_filter(good_matches, left->get_keypoints(), right->get_keypoints());
+	}
+	else
+	{
+		matches = good_matches;
+	}
 }
 
 void ImageMatcher::knn_match()
