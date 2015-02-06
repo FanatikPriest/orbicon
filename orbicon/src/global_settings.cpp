@@ -11,5 +11,7 @@ double GlobalSettings::ransac_distance                  = 1.0;
 double GlobalSettings::ransac_confidence                = 0.98;
 bool   GlobalSettings::ransac_refine_fundamental_matrix = true;
 bool   GlobalSettings::display_homography               = true;
+bool   GlobalSettings::resize_input_image               = true;
+int    GlobalSettings::input_image_max_dimmesion_size   = 500;
 
 GlobalSettings::GrayscaleResize GlobalSettings::grayscale_resize_mode = Original;

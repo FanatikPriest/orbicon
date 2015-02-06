@@ -87,14 +87,21 @@ Mat Image::grayscale_with_keypoints()
 
 void Image::generate_image()
 {
-	image = read_color_image(image_path);
+	Mat input_image = read_color_image(image_path);
+
+	image = shrink_to_fit_in_box(input_image, GlobalSettings::input_image_max_dimmesion_size);
 }
 
 void Image::generate_grayscale_image()
 {
 	Mat temp_image = read_grayscale_image(image_path);
 
-	grayscale_image = resize_image(temp_image);
+	if (GlobalSettings::resize_input_image)
+	{
+		temp_image = shrink_to_fit_in_box(temp_image, GlobalSettings::input_image_max_dimmesion_size);
+	}
+
+	grayscale_image = resize_grayscale_image(temp_image);
 }
 
 void Image::generate_descriptors_and_keypoints()
@@ -110,7 +117,7 @@ void Image::generate_descriptors_and_keypoints()
 	this->descriptors = descriptors;
 }
 
-Mat Image::resize_image(Mat some_image)
+Mat Image::resize_grayscale_image(Mat some_image)
 {
 	switch (GlobalSettings::grayscale_resize_mode)
 	{

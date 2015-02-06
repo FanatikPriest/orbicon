@@ -36,5 +36,5 @@ private:
 	void generate_grayscale_image();
 	void generate_descriptors_and_keypoints(); // TODO research how this can be split-up
 
-	Mat resize_image(Mat some_image);
+	Mat resize_grayscale_image(Mat some_image);
 };

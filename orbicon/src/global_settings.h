@@ -61,6 +61,21 @@ public:
 	static bool display_homography;
 
 	/*
+		A flag whether or not to resize bigger input images. See GlobalSettings::input_image_max_dimmesion_size
+		for further info.
+		Default: true
+	*/
+	static bool resize_input_image;
+
+	/*
+		The maximum size of any of the dimensions of the input image. If the input image has smaller than
+		this number, then it would not be resized. Otherwise it will be resized so it proportionally fit the
+		square defined by this measure.
+		Default: 500
+	*/
+	static int input_image_max_dimmesion_size;
+
+	/*
 		The mode of grayscale image size manipulation before running the descriptor.
 
 		Original       - Does not resize the image.
