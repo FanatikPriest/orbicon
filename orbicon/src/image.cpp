@@ -96,6 +96,11 @@ void Image::generate_grayscale_image()
 {
 	Mat temp_image = read_grayscale_image(image_path);
 
+	if (GlobalSettings::crop_image)
+	{
+		temp_image = crop_image(temp_image);
+	}
+
 	if (GlobalSettings::resize_input_image)
 	{
 		temp_image = shrink_to_fit_in_box(temp_image, GlobalSettings::input_image_max_dimmesion_size);
@@ -117,7 +122,7 @@ void Image::generate_descriptors_and_keypoints()
 	this->descriptors = descriptors;
 }
 
-Mat Image::resize_grayscale_image(Mat some_image)
+Mat Image::resize_grayscale_image(const Mat some_image)
 {
 	switch (GlobalSettings::grayscale_resize_mode)
 	{
@@ -129,4 +134,18 @@ Mat Image::resize_grayscale_image(Mat some_image)
 		Mat shrinked = shrink_image(some_image);
 		return expand_image(shrinked, some_image.size());
 	}
+}
+
+Mat Image::crop_image(const Mat some_image)
+{
+	int padding_percents  = GlobalSettings::crop_padding;
+
+	int x_offset = some_image.cols * padding_percents / 100;
+	int y_offset = some_image.rows * padding_percents / 100;
+	int width    = some_image.cols * (100 - 2 * padding_percents) / 100;
+	int height   = some_image.rows * (100 - 2 * padding_percents) / 100;
+
+	Rect region_of_interest = Rect(x_offset, y_offset, width, height);
+
+	return some_image(region_of_interest);
 }

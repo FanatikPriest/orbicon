@@ -13,5 +13,7 @@ bool   GlobalSettings::ransac_refine_fundamental_matrix = true;
 bool   GlobalSettings::display_homography               = true;
 bool   GlobalSettings::resize_input_image               = true;
 int    GlobalSettings::input_image_max_dimmesion_size   = 500;
+bool   GlobalSettings::crop_image                       = true;
+int    GlobalSettings::crop_padding                     = 20;
 
 GlobalSettings::GrayscaleResize GlobalSettings::grayscale_resize_mode = Original;

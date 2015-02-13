@@ -76,6 +76,19 @@ public:
 	static int input_image_max_dimmesion_size;
 
 	/*
+		A flag whether or not to crop the working image before using the feature detector.
+		Default: true
+	*/
+	static bool crop_image;
+
+	/*
+		The percent of the image dimensions that will be cut from each side of the image.
+		Should not be 0 <= x < 50
+		Default: 20 (percents).
+	*/
+	static int crop_padding;
+
+	/*
 		The mode of grayscale image size manipulation before running the descriptor.
 
 		Original       - Does not resize the image.
