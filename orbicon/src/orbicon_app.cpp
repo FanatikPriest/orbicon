@@ -31,14 +31,18 @@ void OrbiconApp::on_action_open_image_triggered()
 {
 	QString filename = open_single_image();
 
-	this->subject = new Image(filename.toStdString());
+	delete subject;
+
+	subject = new Image(filename.toStdString());
 }
 
 void OrbiconApp::on_action_add_images_to_catalog_triggered()
 {
 	QString filename = open_single_image();
 
-	this->scene = new Image(filename.toStdString());
+	delete scene;
+
+	scene = new Image(filename.toStdString());
 }
 
 void OrbiconApp::on_action_match_triggered()
