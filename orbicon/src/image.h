@@ -15,6 +15,8 @@ public:
 	Image(const string image_path, Mat descriptors);
 	Image(const string image_path, Mat descriptors, vector<KeyPoint> keypoints);
 
+	void reset();
+
 	const string get_image_path() const;
 	Mat& get_image();
 	Mat& get_grayscale_image();
@@ -34,7 +36,7 @@ private:
 
 	void generate_image();
 	void generate_grayscale_image();
-	void generate_descriptors_and_keypoints(); // TODO research how this can be split-up
+	void generate_descriptors_and_keypoints();
 
 	Mat resize_grayscale_image(const Mat some_image);
 	Mat crop_image(const Mat some_image);

@@ -10,8 +10,7 @@ Image::Image(const string image_path)
 {
 	this->image_path = image_path;
 
-	generate_grayscale_image();
-	generate_descriptors_and_keypoints();
+	reset();
 }
 
 Image::Image(const string image_path, Mat descriptors)
@@ -29,6 +28,12 @@ Image::Image(const string image_path, Mat descriptors, vector<KeyPoint> keypoint
 	this->keypoints   = keypoints;
 
 	generate_grayscale_image();
+}
+
+void Image::reset()
+{
+	generate_grayscale_image();
+	generate_descriptors_and_keypoints();
 }
 
 const string Image::get_image_path() const
