@@ -320,7 +320,7 @@ void ImageMatcher::display_homography()
 
 	perspectiveTransform(object_corners, scene_corners, homography);
 
-	Point2f x_offset = Point2f(left_image.cols, 0);
+	Point2f x_offset = Point2f((float)left_image.cols, 0.0f);
 	Scalar scalar = Scalar(0, 255, 0);
 	int thickness = 2;
 

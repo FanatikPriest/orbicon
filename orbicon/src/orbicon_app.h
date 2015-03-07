@@ -23,6 +23,7 @@ public slots:
 	void on_action_open_image_triggered();
 	void on_action_add_images_to_catalog_triggered();
 	void on_action_match_triggered();
+	void on_action_settings_triggered();
 
 private:
 	Ui::OrbiconAppClass ui;

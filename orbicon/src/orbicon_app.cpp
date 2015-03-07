@@ -7,6 +7,7 @@
 #include <opencv2/gpu/gpu.hpp>
 
 #include "orbicon_app.h"
+#include "settings_dialog.h"
 
 #include "image_matcher.h"
 #include "global_settings.h"
@@ -57,11 +58,18 @@ void OrbiconApp::on_action_match_triggered()
 	match();
 }
 
+void OrbiconApp::on_action_settings_triggered()
+{
+	SettingsDialog dialog(this);
+	dialog.exec();
+}
+
 void OrbiconApp::setup_actions()
 {
 	connect(ui.action_Open_Image, SIGNAL(triggered()), this, SLOT(on_action_open_image_triggered()));
 	connect(ui.action_Add_Images_to_Catalog, SIGNAL(triggered()), this, SLOT(on_action_add_images_to_catalog_triggered()));
 	connect(ui.action_Match, SIGNAL(triggered()), this, SLOT(on_action_match_triggered()));
+	connect(ui.action_Settings, SIGNAL(triggered()), this, SLOT(on_action_settings_triggered()));
 }
 
 QString OrbiconApp::open_single_image()

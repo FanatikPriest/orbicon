@@ -30,7 +30,14 @@
     <addaction name="action_Open_Image"/>
     <addaction name="action_Add_Images_to_Catalog"/>
    </widget>
+   <widget class="QMenu" name="menu_Options">
+    <property name="title">
+     <string>&amp;Options</string>
+    </property>
+    <addaction name="action_Settings"/>
+   </widget>
    <addaction name="menu_File"/>
+   <addaction name="menu_Options"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -58,6 +65,11 @@
    </property>
    <property name="toolTip">
     <string>Match</string>
+   </property>
+  </action>
+  <action name="action_Settings">
+   <property name="text">
+    <string>&amp;Settings...</string>
    </property>
   </action>
  </widget>

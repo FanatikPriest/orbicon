@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'orbicon_app.ui'
 **
-** Created by: Qt User Interface Compiler version 5.4.0
+** Created by: Qt User Interface Compiler version 5.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -29,9 +29,11 @@ public:
     QAction *action_Open_Image;
     QAction *action_Add_Images_to_Catalog;
     QAction *action_Match;
+    QAction *action_Settings;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu_File;
+    QMenu *menu_Options;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -46,6 +48,8 @@ public:
         action_Add_Images_to_Catalog->setObjectName(QStringLiteral("action_Add_Images_to_Catalog"));
         action_Match = new QAction(OrbiconAppClass);
         action_Match->setObjectName(QStringLiteral("action_Match"));
+        action_Settings = new QAction(OrbiconAppClass);
+        action_Settings->setObjectName(QStringLiteral("action_Settings"));
         centralWidget = new QWidget(OrbiconAppClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         OrbiconAppClass->setCentralWidget(centralWidget);
@@ -54,6 +58,8 @@ public:
         menuBar->setGeometry(QRect(0, 0, 600, 21));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
+        menu_Options = new QMenu(menuBar);
+        menu_Options->setObjectName(QStringLiteral("menu_Options"));
         OrbiconAppClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(OrbiconAppClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -63,8 +69,10 @@ public:
         OrbiconAppClass->setStatusBar(statusBar);
 
         menuBar->addAction(menu_File->menuAction());
+        menuBar->addAction(menu_Options->menuAction());
         menu_File->addAction(action_Open_Image);
         menu_File->addAction(action_Add_Images_to_Catalog);
+        menu_Options->addAction(action_Settings);
         mainToolBar->addAction(action_Match);
 
         retranslateUi(OrbiconAppClass);
@@ -81,7 +89,9 @@ public:
 #ifndef QT_NO_TOOLTIP
         action_Match->setToolTip(QApplication::translate("OrbiconAppClass", "Match", 0));
 #endif // QT_NO_TOOLTIP
+        action_Settings->setText(QApplication::translate("OrbiconAppClass", "&Settings...", 0));
         menu_File->setTitle(QApplication::translate("OrbiconAppClass", "&File", 0));
+        menu_Options->setTitle(QApplication::translate("OrbiconAppClass", "&Options", 0));
     } // retranslateUi
 
 };
