@@ -31,6 +31,7 @@ void SettingsDialog::populate_settings_in_dialog()
 	ui.input_image_max_dimmension_size_spin_box->setValue(GlobalSettings::input_image_max_dimmesion_size);
 	ui.crop_image_check_box->setChecked(GlobalSettings::crop_image);
 	ui.crop_padding_spin_box->setValue(GlobalSettings::crop_padding);
+	ui.grayscale_resize_mode_combo_box->setCurrentIndex((int)GlobalSettings::grayscale_resize_mode);
 }
 
 void SettingsDialog::fetch_settings_from_dialog()
@@ -48,6 +49,7 @@ void SettingsDialog::fetch_settings_from_dialog()
 	GlobalSettings::input_image_max_dimmesion_size   = ui.input_image_max_dimmension_size_spin_box->value();
 	GlobalSettings::crop_image                       = ui.crop_image_check_box->isChecked();
 	GlobalSettings::crop_padding                     = ui.crop_padding_spin_box->value();
+	GlobalSettings::grayscale_resize_mode            = (GlobalSettings::GrayscaleResize)ui.grayscale_resize_mode_combo_box->currentIndex();
 }
 
 void SettingsDialog::accept()
