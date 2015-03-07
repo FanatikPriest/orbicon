@@ -344,9 +344,9 @@
   <widget class="QComboBox" name="grayscale_resize_mode_combo_box">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>380</x>
      <y>170</y>
-     <width>161</width>
+     <width>101</width>
      <height>22</height>
     </rect>
    </property>
@@ -368,6 +368,19 @@
      <string comment="2" extracomment="This will shrink the image to half its size and then will expand it back to full size.">Blur by resizing</string>
     </property>
    </item>
+  </widget>
+  <widget class="QLabel" name="grayscale_resize_mode_label">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>170</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Grayscale resize mode</string>
+   </property>
   </widget>
  </widget>
  <resources/>

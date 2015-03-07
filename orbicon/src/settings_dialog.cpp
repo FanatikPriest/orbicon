@@ -9,11 +9,67 @@ SettingsDialog::SettingsDialog(QWidget *parent, Qt::WindowFlags f) : QDialog(par
 	ui.setupUi(this);
 
 	populate_settings_in_dialog();
+
+	setup_actions();
+
+	do_actions();
 }
 
 SettingsDialog::~SettingsDialog()
 {
 
+}
+
+void SettingsDialog::accept()
+{
+	fetch_settings_from_dialog();
+	QDialog::accept();
+}
+
+void SettingsDialog::use_knn_match_check_box_state_changed()
+{
+	bool is_checked = ui.use_knn_match_check_box->isChecked();
+
+	ui.knn_match_distance_ratio_double_spin_box->setEnabled(is_checked);
+}
+
+void SettingsDialog::use_ransac_filterring_check_box_state_changed()
+{
+	bool is_checked = ui.use_ransac_filterring_check_box->isChecked();
+
+	ui.ransac_distance_double_spin_box->setEnabled(is_checked);
+	ui.ransac_confidence_double_spin_box->setEnabled(is_checked);
+	ui.ransac_refine_fundamental_matrix_check_box->setEnabled(is_checked);
+}
+
+void SettingsDialog::resize_input_image_check_box_state_changed()
+{
+	bool is_checked = ui.resize_input_image_check_box->isChecked();
+
+	ui.input_image_max_dimmension_size_spin_box->setEnabled(is_checked);
+}
+
+void SettingsDialog::crop_image_check_box_state_changed()
+{
+	bool is_checked = ui.crop_image_check_box->isChecked();
+
+	ui.crop_padding_spin_box->setEnabled(is_checked);
+}
+
+void SettingsDialog::setup_actions()
+{
+	connect(ui.use_knn_match_check_box, SIGNAL(stateChanged(int)), this, SLOT(use_knn_match_check_box_state_changed()));
+	connect(ui.use_ransac_filterring_check_box, SIGNAL(stateChanged(int)), this, SLOT(use_ransac_filterring_check_box_state_changed()));
+	connect(ui.resize_input_image_check_box, SIGNAL(stateChanged(int)), this, SLOT(resize_input_image_check_box_state_changed()));
+	connect(ui.crop_image_check_box, SIGNAL(stateChanged(int)), this, SLOT(crop_image_check_box_state_changed()));
+}
+
+void SettingsDialog::do_actions()
+{
+	use_knn_match_check_box_state_changed();
+	use_ransac_filterring_check_box_state_changed();
+	resize_input_image_check_box_state_changed();
+	crop_image_check_box_state_changed();
 }
 
 void SettingsDialog::populate_settings_in_dialog()
@@ -50,10 +106,4 @@ void SettingsDialog::fetch_settings_from_dialog()
 	GlobalSettings::crop_image                       = ui.crop_image_check_box->isChecked();
 	GlobalSettings::crop_padding                     = ui.crop_padding_spin_box->value();
 	GlobalSettings::grayscale_resize_mode            = (GlobalSettings::GrayscaleResize)ui.grayscale_resize_mode_combo_box->currentIndex();
-}
-
-void SettingsDialog::accept()
-{
-	fetch_settings_from_dialog();
-	QDialog::accept();
 }

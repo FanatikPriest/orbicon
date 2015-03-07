@@ -14,9 +14,16 @@ public:
 
 public slots:
 	void accept();
+	void use_knn_match_check_box_state_changed();
+	void use_ransac_filterring_check_box_state_changed();
+	void resize_input_image_check_box_state_changed();
+	void crop_image_check_box_state_changed();
 
 private:
 	Ui::SettingsDialogClass ui;
+
+	void setup_actions();
+	void do_actions();
 
 	void populate_settings_in_dialog();
 	void fetch_settings_from_dialog();
