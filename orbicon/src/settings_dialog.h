@@ -12,6 +12,9 @@ public:
 	SettingsDialog(QWidget *parent = 0, Qt::WindowFlags f = 0);
 	~SettingsDialog();
 
+public slots:
+	void accept();
+
 private:
 	Ui::SettingsDialogClass ui;
 
