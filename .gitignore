@@ -175,3 +175,4 @@ FakesAssemblies/
 
 # Qt generated files
 orbicon/GeneratedFiles/
+*.ui.bak
